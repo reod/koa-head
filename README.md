@@ -27,14 +27,14 @@ app.listen(3333);
 will produce `json` response:
 ```json
 {
-  title: "Title for my webpage",
-  metaTags: [
+  "title": "Title for my webpage",
+  "metaTags": [
     {
-      name: "twitter:card",
-      content: "summary_large_image"
+      "name": "twitter:card",
+      "content": "summary_large_image"
     }
   ],
-  links: [ ]
+  "links": [ ]
 }
 ```
 
@@ -53,7 +53,7 @@ Add `<link />` tag.
 ## Middleware factory function config
 
 | Option | Description | Default value  | 
-|---|---|---|---|---|
+|---|---|---|
 | `ctxNamespace`  | Name under which middleware is exposed in `cxt` object and is used by other middlewares i.e. `ctx.document.setTitle('Hello')`. | `'document'`  |
-| `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'document'`  |
-| `documentTitleFormatter`  | If set, all values passed to `.setTitle()` function will pe parsed by this formatter.  | `title => title`  |
+| `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'document'` |
+| `documentTitleFormatter`  | If set, all values passed to `.setTitle()` function will pe parsed by this formatter. | `title => title` |
