@@ -1,11 +1,15 @@
 {
   "name": "koa-head",
-  "version": "1.0.0",
-  "description": "A document head manager for koa",
+  "version": "1.0.1",
+  "description": "A document head manager middleware for koa",
   "main": "src/index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Remek Ambroziak <remek.ambroziak@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reod/koa-head-example.git"
+  }
 }
