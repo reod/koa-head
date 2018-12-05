@@ -1,0 +1,11 @@
+{
+  "name": "koa-head",
+  "version": "1.0.0",
+  "description": "A document head manager for koa",
+  "main": "src/index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
