@@ -5,6 +5,8 @@ A document head manager middleware for koa.
 `npm i koa-head`
 
 ## TL;DR example
+**note:** this package can be used as native ES6 module but has fallback to classic node.js `require`. 
+
 ```js
 import Koa from 'koa';
 import koaHead from 'koa-head';
