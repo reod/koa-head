@@ -2,14 +2,22 @@
   "name": "koa-head",
   "version": "1.0.1",
   "description": "A document head manager middleware for koa",
-  "main": "src/index.mjs",
+  "main": "dist/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production && cp src/index.mjs dist/index.mjs"
   },
   "author": "Remek Ambroziak <remek.ambroziak@gmail.com>",
   "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/reod/koa-head-example.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.27.0",
+    "webpack-cli": "^3.1.2"
   }
 }
