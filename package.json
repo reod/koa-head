@@ -11,7 +11,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reod/koa-head-example.git"
+    "url": "https://github.com/reod/koa-head.git"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
