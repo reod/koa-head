@@ -1,7 +1,7 @@
 const defaultConfig = {
-  ctxNamespace: 'document',
-  stateNamespace: 'document',
-  documentTitleFormatter: title => title,
+  ctxNamespace: "document",
+  stateNamespace: "document",
+  documentTitleFormatter: title => title
 };
 
 export default function(opts) {
@@ -9,24 +9,25 @@ export default function(opts) {
 
   return async function(ctx, next) {
     ctx.state[config.stateNamespace] = {};
-    ctx.state[config.stateNamespace].title = '';
+    ctx.state[config.stateNamespace].title = "";
     ctx.state[config.stateNamespace].metaTags = [];
     ctx.state[config.stateNamespace].links = [];
 
     const middlewareApi = {
-      setTitle: (title) => {
-        const documentTitle = typeof title === 'string'
-          ? title
-          : config.documentTitleFormatter(title);
+      setTitle: title => {
+        const documentTitle =
+          typeof title === "string"
+            ? title
+            : config.documentTitleFormatter(title);
 
         ctx.state[config.stateNamespace].title = documentTitle;
       },
 
-      addMetaTag: (prop) => {
+      addMetaTag: prop => {
         ctx.state[config.stateNamespace].metaTags.push(prop);
       },
 
-      addLink: (prop) => {
+      addLink: prop => {
         ctx.state[config.stateNamespace].links.push(prop);
       }
     };
@@ -35,4 +36,4 @@ export default function(opts) {
 
     await next();
   };
-};
+}
