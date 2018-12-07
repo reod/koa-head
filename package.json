@@ -4,10 +4,10 @@
   "description": "A document head manager middleware for koa",
   "main": "dist/index",
   "scripts": {
-    "test": "tape -r esm test/*.spec.js",
-    "build": "webpack --mode production && cp src/index.mjs dist/index.mjs",
-    "format": "prettier --write \"*/*.*js\"",
-    "clean": "rm -r dist/*"
+    "test": "tape -r esm */*.spec.js */**/*.spec.js",
+    "build": "webpack",
+    "format": "prettier --write \"*/**/*.*js\"",
+    "clean": "rm src/index.js"
   },
   "author": "Remek Ambroziak <remek.ambroziak@gmail.com>",
   "license": "ISC",
@@ -18,6 +18,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.0",
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "babel-loader": "^8.0.4",
     "esm": "^3.0.84",
     "prettier": "^1.15.3",

@@ -1,6 +1,6 @@
 import test from "tape";
-import koaHead from "./../src/index";
-import { createCtx, createNext } from "./test-helpers";
+import koaHead from "./index";
+import { createCtx, createNext } from "./../test/test-helpers";
 
 test("middleware setup", async t => {
   const docHead = koaHead();

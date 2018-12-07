@@ -1,8 +1,7 @@
-const defaultConfig = {
-  ctxNamespace: "document",
-  stateNamespace: "document",
-  documentTitleFormatter: title => title
-};
+import defaultConfig from "./config";
+import createSetTitle from "./set-title";
+import createAddMetaTag from "./add-meta-tag";
+import createAddLink from "./add-link";
 
 export default function(opts) {
   const config = { ...defaultConfig, ...opts };
@@ -14,22 +13,9 @@ export default function(opts) {
     ctx.state[config.stateNamespace].links = [];
 
     const middlewareApi = {
-      setTitle: title => {
-        const documentTitle =
-          typeof title === "string"
-            ? title
-            : config.documentTitleFormatter(title);
-
-        ctx.state[config.stateNamespace].title = documentTitle;
-      },
-
-      addMetaTag: prop => {
-        ctx.state[config.stateNamespace].metaTags.push(prop);
-      },
-
-      addLink: prop => {
-        ctx.state[config.stateNamespace].links.push(prop);
-      }
+      setTitle: createSetTitle(config, ctx),
+      addMetaTag: createAddMetaTag(config, ctx),
+      addLink: createAddLink(config, ctx)
     };
 
     ctx[config.ctxNamespace] = middlewareApi;
