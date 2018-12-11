@@ -50,7 +50,8 @@ Set document title.
 Add `<meta />` tag.
 ### `.addLink( object )`
 Add `<link />` tag.
-
+### `.addStyle( string | object )`
+Add `<style />` tag.
 
 ## Middleware factory function config
 
@@ -59,3 +60,6 @@ Add `<link />` tag.
 | `ctxNamespace`  | Name under which middleware is exposed in `cxt` object and is used by other middlewares i.e. `ctx.document.setTitle('Hello')`. | `'document'`  |
 | `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'document'` |
 | `documentTitleFormatter`  | If set, all values passed to `.setTitle()` function will pe parsed by this formatter. | `title => title` |
+| `render` | | |
+|`render.tagSeparator` | Separator between tags inside one group. | `\n` |
+|`render.groupSeparator` | Separator between group of tags. | `\n\n` |

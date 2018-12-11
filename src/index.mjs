@@ -3,6 +3,7 @@ import createSetTitle from "./set-title";
 import createAddMetaTag from "./add-meta-tag";
 import createAddLink from "./add-link";
 import createAddStyle from "./add-style";
+import createRender from "./render";
 
 export default function(opts) {
   const config = { ...defaultConfig, ...opts };
@@ -19,6 +20,7 @@ export default function(opts) {
       addMetaTag: createAddMetaTag(config, ctx),
       addLink: createAddLink(config, ctx),
       addStyle: createAddStyle(config, ctx),
+      render: createRender(config, ctx)
     };
 
     ctx[config.ctxNamespace] = middlewareApi;
