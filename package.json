@@ -1,8 +1,8 @@
 {
   "name": "koa-head",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A document head manager middleware for koa",
-  "main": "dist/index",
+  "main": "src/index",
   "scripts": {
     "test": "tape -r esm \"src/**/*.spec.js\" | tap-spec",
     "build": "webpack",
