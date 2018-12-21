@@ -94,10 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/config.mjs
 /* harmony default export */ var src_config = ({
-  ctxNamespace: "document",
-  stateNamespace: "document",
+  ctxNamespace: "documentHead",
+  stateNamespace: "documentHead",
   documentTitleFormatter: title => title,
-  render: {
+  toHtml: {
     tagSeparator: "\n",
     groupSeparator: "\n\n"
   }
@@ -129,11 +129,11 @@ __webpack_require__.r(__webpack_exports__);
 
   ctx.state[config.stateNamespace].styles.push(styleObj);
 });
-// CONCATENATED MODULE: ./src/render/render-title/index.mjs
+// CONCATENATED MODULE: ./src/to-html/render-title/index.mjs
 /* harmony default export */ var render_title = ((config, ctx) => title => {
   return `<title>${title}</title>`;
 });
-// CONCATENATED MODULE: ./src/render/render-meta-tag/index.mjs
+// CONCATENATED MODULE: ./src/to-html/render-meta-tag/index.mjs
 /* harmony default export */ var render_meta_tag = (tag => {
   let html = "<meta ";
   Object.keys(tag).forEach(key => {
@@ -142,7 +142,7 @@ __webpack_require__.r(__webpack_exports__);
   html += "/>";
   return html;
 });
-// CONCATENATED MODULE: ./src/render/render-link/index.mjs
+// CONCATENATED MODULE: ./src/to-html/render-link/index.mjs
 /* harmony default export */ var render_link = (tag => {
   let html = "<link ";
   Object.keys(tag).forEach(key => {
@@ -151,7 +151,7 @@ __webpack_require__.r(__webpack_exports__);
   html += "/>";
   return html;
 });
-// CONCATENATED MODULE: ./src/render/render-style/index.mjs
+// CONCATENATED MODULE: ./src/to-html/render-style/index.mjs
 /* harmony default export */ var render_style = (style => {
   let html = "<style";
   Object.keys(style).filter(key => key !== "cssText").forEach((key, i, all) => {
@@ -170,12 +170,12 @@ __webpack_require__.r(__webpack_exports__);
   html += "</style>";
   return html;
 });
-// CONCATENATED MODULE: ./src/render/index.mjs
+// CONCATENATED MODULE: ./src/to-html/index.mjs
 
 
 
 
-/* harmony default export */ var render = ((config, ctx) => () => {
+/* harmony default export */ var to_html = ((config, ctx) => () => {
   const renderFunctions = new Map([["title", render_title(config, ctx)], ["metaTags", renderGroup(render_meta_tag, config)], ["links", renderGroup(render_link, config)], ["styles", renderGroup(render_style, config)]]);
   let headHtml = "";
   const documentHead = ctx.state[config.stateNamespace];
@@ -186,7 +186,7 @@ __webpack_require__.r(__webpack_exports__);
 
     const renderFunction = renderFunctions.get(headPart);
     headHtml += renderFunction(documentHead[headPart]);
-    headHtml += config.render.groupSeparator;
+    headHtml += config.toHtml.groupSeparator;
   });
   return headHtml;
 });
@@ -194,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
 function renderGroup(renderItem, config) {
   return items => items.reduce((html, item) => {
     html += renderItem(item);
-    html += config.render.tagSeparator;
+    html += config.toHtml.tagSeparator;
     return html;
   }, "");
 }
@@ -220,7 +220,7 @@ function renderGroup(renderItem, config) {
       addMetaTag: add_meta_tag(config, ctx),
       addLink: add_link(config, ctx),
       addStyle: add_style(config, ctx),
-      render: render(config, ctx)
+      toHtml: to_html(config, ctx)
     };
     ctx[config.ctxNamespace] = middlewareApi;
     await next();

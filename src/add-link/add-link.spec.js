@@ -10,6 +10,6 @@ test("addMetaTag", async t => {
 
   addMetaTag(expectedLink);
 
-  t.deepEqual(ctx.state.document.links, [expectedLink]);
+  t.deepEqual(ctx.state[config.stateNamespace].links, [expectedLink]);
   t.end();
 });

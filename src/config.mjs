@@ -1,8 +1,8 @@
 export default {
-  ctxNamespace: "document",
-  stateNamespace: "document",
+  ctxNamespace: "documentHead",
+  stateNamespace: "documentHead",
   documentTitleFormatter: title => title,
-  render: {
+  toHtml: {
     tagSeparator: "\n",
     groupSeparator: "\n\n"
   }

@@ -5,7 +5,7 @@ A document head manager middleware for koa.
 `npm i koa-head`
 
 ## TL;DR example
-**note:** this package can be used as native ES6 module but has fallback to classic node.js `require`. 
+**note:** this package can be used as native ES6 module but has fallback to CommonJS `require`. 
 
 ```js
 import Koa from 'koa';
@@ -18,29 +18,32 @@ app
   .use(async (ctx, next) => {
     ctx.document.setTitle('Title for my webpage');
     ctx.document.addMetaTag({ name: 'twitter:card', content: 'summary_large_image' });
+    ctx.document.addLink({ rel: 'canonical', href: 'index.html' });
+    ctx.document.addStyle('body { background: aliceblue; }');
+
     await next();
   })
   .use(ctx => {
-    ctx.body = ctx.state.document;
+    const documentHead = ctx.document.toHTML();
+    const userData = { name: 'John Doe' };
+
+    await ctx.myAwesomeLayoutEngine('user-view', {
+      documentHead,
+      userData,
+    })
   });
 
 app.listen(3333);
 ```
-will produce `json` response:
-```json
-{
-  "title": "Title for my webpage",
-  "metaTags": [
-    {
-      "name": "twitter:card",
-      "content": "summary_large_image"
-    }
-  ],
-  "links": [ ]
-}
+will make `documentHead` variable to contain:
+```html
+<title>Title for my webpage</title>
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="index.html" />
+<style type="text/css">body { background: aliceblue; }</style>
 ```
+so you can use it in a place in your layout.
 
-More sophisticated example can be found in [koa-head-example](https://github.com/reod/koa-head-example) repo.
 
 ## Available methods
 
@@ -52,6 +55,8 @@ Add `<meta />` tag.
 Add `<link />` tag.
 ### `.addStyle( string | object )`
 Add `<style />` tag.
+### `.toHtml()`
+Render all set content to coresponding HTML tags.
 
 ## Middleware factory function config
 
@@ -60,6 +65,6 @@ Add `<style />` tag.
 | `ctxNamespace`  | Name under which middleware is exposed in `cxt` object and is used by other middlewares i.e. `ctx.document.setTitle('Hello')`. | `'document'`  |
 | `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'document'` |
 | `documentTitleFormatter`  | If set, all values passed to `.setTitle()` function will pe parsed by this formatter. | `title => title` |
-| `render` | Config for render function. | `{ [default_values] }` |
-|`render.tagSeparator` | Separator between tags inside one group. | `\n` |
-|`render.groupSeparator` | Separator between group of tags. | `\n\n` |
+| `toHtml` | Config for toHtml function. | `{ [default_values] }` |
+|`toHtml.tagSeparator` | Separator between tags inside one group. | `\n` |
+|`toHtml.groupSeparator` | Separator between group of tags. | `\n\n` |

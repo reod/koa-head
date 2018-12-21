@@ -6,6 +6,10 @@ export function createCtx() {
   };
 }
 
+export function createNext() {
+  return () => {};
+}
+
 export async function createCtxWithKoaHead(koaHeadOptions) {
   const docHead = koaHead(koaHeadOptions);
   const ctx = createCtx();
@@ -14,8 +18,4 @@ export async function createCtxWithKoaHead(koaHeadOptions) {
   await docHead(ctx, next);
 
   return ctx;
-}
-
-export function createNext() {
-  return () => {};
 }

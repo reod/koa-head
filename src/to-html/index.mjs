@@ -22,7 +22,7 @@ export default (config, ctx) => () => {
     const renderFunction = renderFunctions.get(headPart);
 
     headHtml += renderFunction(documentHead[headPart]);
-    headHtml += config.render.groupSeparator;
+    headHtml += config.toHtml.groupSeparator;
   });
 
   return headHtml;
@@ -32,7 +32,7 @@ function renderGroup(renderItem, config) {
   return items =>
     items.reduce((html, item) => {
       html += renderItem(item);
-      html += config.render.tagSeparator;
+      html += config.toHtml.tagSeparator;
 
       return html;
     }, "");

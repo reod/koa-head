@@ -9,6 +9,6 @@ test("setTitle", async t => {
 
   setTitle("awesome title");
 
-  t.equal(ctx.state.document.title, "awesome title");
+  t.equal(ctx.state[config.stateNamespace].title, "awesome title");
   t.end();
 });

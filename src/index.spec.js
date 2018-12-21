@@ -1,16 +1,16 @@
 import test from "tape";
-import koaHead from "./index";
+import koaHead from "./index.mjs"; // mjs is important here
 import { createCtx, createNext } from "./../test/test-helpers";
 
-test("middleware setup", async t => {
+test("middleware setup with default namespaces", async t => {
   const docHead = koaHead();
   const ctx = createCtx();
   const next = createNext();
 
   await docHead(ctx, next);
 
-  t.assert(ctx.document);
-  t.assert(ctx.state.document);
+  t.assert(ctx.documentHead);
+  t.assert(ctx.state.documentHead);
   t.end();
 });
 

@@ -14,7 +14,7 @@ test("addStyle (as string)", async t => {
 
   addStyle("body { color: red; }");
 
-  t.deepEqual(ctx.state.document.styles, [expectedStyle]);
+  t.deepEqual(ctx.state[config.stateNamespace].styles, [expectedStyle]);
   t.end();
 });
 
@@ -31,6 +31,6 @@ test("addStyle (as object)", async t => {
 
   addStyle({ media, cssText });
 
-  t.deepEqual(ctx.state.document.styles, [expectedStyle]);
+  t.deepEqual(ctx.state[config.stateNamespace].styles, [expectedStyle]);
   t.end();
 });
