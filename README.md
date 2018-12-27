@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/reod/koa-head/badge.svg?targetFile=package.json)](https://snyk.io/test/github/reod/koa-head?targetFile=package.json)
+
 # koa-head
 A document head manager middleware for koa.
 
