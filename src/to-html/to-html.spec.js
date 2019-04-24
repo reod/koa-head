@@ -15,6 +15,7 @@ test("render", async t => {
     rel: "stylesheet"
   });
   ctx[config.ctxNamespace].addStyle("body { color: black }");
+  ctx[config.ctxNamespace].addScript("{ fixture: 'test fixture' }");
   const renderHead = render(config, ctx);
   const expectedHeadHtml = `<title>sample title</title>
 
@@ -25,6 +26,9 @@ test("render", async t => {
 
 
 <style type="text/css">body { color: black }</style>
+
+
+<script type="text/javascript">{ fixture: 'test fixture' }</script>
 
 
 `;

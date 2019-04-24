@@ -1,11 +1,11 @@
-import addStyle from "./index";
+import createAddStyle from "./index";
 import test from "tape";
 import config from "./../config";
 import { createCtxWithKoaHead } from "./../../test/test-helpers";
 
 test("addStyle (as string)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addStyle = addStyle(config, ctx);
+  const addStyle = createAddStyle(config, ctx);
   const cssText = "body { color: red; }";
   const expectedStyle = {
     type: "text/css",
@@ -20,7 +20,7 @@ test("addStyle (as string)", async t => {
 
 test("addStyle (as object)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addStyle = addStyle(config, ctx);
+  const addStyle = createAddStyle(config, ctx);
   const cssText = "body { color: red; }";
   const media = "all and (max-width: 500px)";
   const expectedStyle = {
