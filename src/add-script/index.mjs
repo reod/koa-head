@@ -1,10 +1,10 @@
 export default (config, ctx) => script => {
-    const scriptObj =
-        typeof script === "string" ? { jsText: script } : { ...script };
+  const scriptObj =
+    typeof script === "string" ? { jsText: script } : { ...script };
 
-    if (!scriptObj.type) {
-        scriptObj.type = "text/javascript";
-    }
+  if (!scriptObj.type) {
+    scriptObj.type = "text/javascript";
+  }
 
-    ctx.state[config.stateNamespace].scripts.push(scriptObj);
+  ctx.state[config.stateNamespace].scripts.push(scriptObj);
 };

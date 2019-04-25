@@ -129,6 +129,19 @@ __webpack_require__.r(__webpack_exports__);
 
   ctx.state[config.stateNamespace].styles.push(styleObj);
 });
+// CONCATENATED MODULE: ./src/add-script/index.mjs
+/* harmony default export */ var add_script = ((config, ctx) => script => {
+  const scriptObj = typeof script === "string" ? {
+    jsText: script
+  } : { ...script
+  };
+
+  if (!scriptObj.type) {
+    scriptObj.type = "text/javascript";
+  }
+
+  ctx.state[config.stateNamespace].scripts.push(scriptObj);
+});
 // CONCATENATED MODULE: ./src/to-html/render-title/index.mjs
 /* harmony default export */ var render_title = ((config, ctx) => title => {
   return `<title>${title}</title>`;
@@ -170,13 +183,33 @@ __webpack_require__.r(__webpack_exports__);
   html += "</style>";
   return html;
 });
+// CONCATENATED MODULE: ./src/to-html/render-script/index.mjs
+/* harmony default export */ var render_script = (script => {
+  let html = "<script";
+  Object.keys(script).filter(key => key !== "jsText").forEach((key, i, all) => {
+    if (i === 0) {
+      html += " ";
+    }
+
+    html += `${key}="${script[key]}"`;
+
+    if (i < all.length - 1) {
+      html += " ";
+    }
+  });
+  html += ">";
+  html += script.jsText;
+  html += "</script>";
+  return html;
+});
 // CONCATENATED MODULE: ./src/to-html/index.mjs
 
 
 
 
+
 /* harmony default export */ var to_html = ((config, ctx) => () => {
-  const renderFunctions = new Map([["title", render_title(config, ctx)], ["metaTags", renderGroup(render_meta_tag, config)], ["links", renderGroup(render_link, config)], ["styles", renderGroup(render_style, config)]]);
+  const renderFunctions = new Map([["title", render_title(config, ctx)], ["metaTags", renderGroup(render_meta_tag, config)], ["links", renderGroup(render_link, config)], ["styles", renderGroup(render_style, config)], ["scripts", renderGroup(render_script, config)]]);
   let headHtml = "";
   const documentHead = ctx.state[config.stateNamespace];
   Object.keys(documentHead).forEach(headPart => {
@@ -205,6 +238,7 @@ function renderGroup(renderItem, config) {
 
 
 
+
 /* harmony default export */ var src = __webpack_exports__["default"] = (function (opts) {
   const config = { ...src_config,
     ...opts
@@ -215,11 +249,13 @@ function renderGroup(renderItem, config) {
     ctx.state[config.stateNamespace].metaTags = [];
     ctx.state[config.stateNamespace].links = [];
     ctx.state[config.stateNamespace].styles = [];
+    ctx.state[config.stateNamespace].scripts = [];
     const middlewareApi = {
       setTitle: set_title(config, ctx),
       addMetaTag: add_meta_tag(config, ctx),
       addLink: add_link(config, ctx),
       addStyle: add_style(config, ctx),
+      addScript: add_script(config, ctx),
       toHtml: to_html(config, ctx)
     };
     ctx[config.ctxNamespace] = middlewareApi;
