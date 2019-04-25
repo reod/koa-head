@@ -18,16 +18,16 @@ const app = new Koa();
 app
   .use(koaHead())
   .use(async (ctx, next) => {
-    ctx.document.setTitle('Title for my webpage');
-    ctx.document.addMetaTag({ name: 'twitter:card', content: 'summary_large_image' });
-    ctx.document.addLink({ rel: 'canonical', href: 'index.html' });
-    ctx.document.addStyle('body { background: aliceblue; }');
-    ctx.document.addScript("{ fixture: 'test fixture' }");
+    ctx.documentHead.setTitle('Title for my webpage');
+    ctx.documentHead.addMetaTag({ name: 'twitter:card', content: 'summary_large_image' });
+    ctx.documentHead.addLink({ rel: 'canonical', href: 'index.html' });
+    ctx.documentHead.addStyle('body { background: aliceblue; }');
+    ctx.documentHead.addScript("{ fixture: 'test fixture' }");
 
     await next();
   })
   .use(ctx => {
-    const documentHead = ctx.document.toHTML();
+    const documentHead = ctx.documentHead.toHTML();
     const userData = { name: 'John Doe' };
 
     await ctx.myAwesomeLayoutEngine('user-view', {
