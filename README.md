@@ -68,8 +68,8 @@ Render all set content to coresponding HTML tags.
 
 | Option | Description | Default value  | 
 |---|---|---|
-| `ctxNamespace`  | Name under which middleware is exposed in `cxt` object and is used by other middlewares i.e. `ctx.document.setTitle('Hello')`. | `'document'`  |
-| `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'document'` |
+| `ctxNamespace`  | Name under which middleware is exposed in `cxt` object and is used by other middlewares i.e. `ctx.documentHead.setTitle('Hello')`. | `'documentHead'`  |
+| `stateNamespace`  | Name under which middleware stores values in `ctx.state` | `'documentHead'` |
 | `documentTitleFormatter`  | If set, all values passed to `.setTitle()` function will pe parsed by this formatter. | `title => title` |
 | `toHtml` | Config for toHtml function. | `{ [default_values] }` |
 |`toHtml.tagSeparator` | Separator between tags inside one group. | `\n` |
