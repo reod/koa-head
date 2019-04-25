@@ -1,14 +1,14 @@
-import addLink from "./index";
+import createAddLink from "./index";
 import test from "tape";
 import config from "./../config";
 import { createCtxWithKoaHead } from "./../../test/test-helpers";
 
-test("addMetaTag", async t => {
+test("addLink", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addMetaTag = addLink(config, ctx);
+  const addLink = createAddLink(config, ctx);
   const expectedLink = { rel: "rel", content: "rel-content" };
 
-  addMetaTag(expectedLink);
+  addLink(expectedLink);
 
   t.deepEqual(ctx.state[config.stateNamespace].links, [expectedLink]);
   t.end();

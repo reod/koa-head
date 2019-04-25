@@ -22,6 +22,7 @@ app
     ctx.document.addMetaTag({ name: 'twitter:card', content: 'summary_large_image' });
     ctx.document.addLink({ rel: 'canonical', href: 'index.html' });
     ctx.document.addStyle('body { background: aliceblue; }');
+    ctx.document.addScript("{ fixture: 'test fixture' }");
 
     await next();
   })
@@ -43,6 +44,7 @@ will make `documentHead` variable to contain:
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="index.html" />
 <style type="text/css">body { background: aliceblue; }</style>
+<script type="text/javascript">{ fixture: 'test fixture' }</script>
 ```
 so you can use it in a place in your layout.
 
@@ -57,6 +59,8 @@ Add `<meta />` tag.
 Add `<link />` tag.
 ### `.addStyle( string | object )`
 Add `<style />` tag.
+### `.addScript( string | object )`
+Add `<script />` tag.
 ### `.toHtml()`
 Render all set content to coresponding HTML tags.
 
