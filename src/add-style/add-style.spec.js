@@ -1,15 +1,17 @@
 import createAddStyle from "./index";
 import test from "tape";
 import config from "./../config";
-import { createCtxWithKoaHead } from "./../../test/test-helpers";
+import { createCtxWithKoaHead, createState } from "./../../test/test-helpers";
 
 test("addStyle (as string)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addStyle = createAddStyle(config, ctx);
+  const state = createState();
+  const addStyle = createAddStyle(config, state, ctx);
   const cssText = "body { color: red; }";
   const expectedStyle = {
     type: "text/css",
-    cssText
+    cssText,
+    _meta: { insertIndex: 0 }
   };
 
   addStyle("body { color: red; }");
@@ -20,13 +22,16 @@ test("addStyle (as string)", async t => {
 
 test("addStyle (as object)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addStyle = createAddStyle(config, ctx);
+  const state = createState();
+  const addStyle = createAddStyle(config, state, ctx);
   const cssText = "body { color: red; }";
   const media = "all and (max-width: 500px)";
   const expectedStyle = {
     media,
     cssText,
-    type: "text/css"
+    type: "text/css",
+
+    _meta: { insertIndex: 0 }
   };
 
   addStyle({ media, cssText });

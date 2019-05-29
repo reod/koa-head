@@ -1,4 +1,6 @@
-export default (config, ctx) => style => {
+import { insertProp } from "../prop";
+
+export default (config, state, ctx) => style => {
   const styleObj =
     typeof style === "string" ? { cssText: style } : { ...style };
 
@@ -6,5 +8,7 @@ export default (config, ctx) => style => {
     styleObj.type = "text/css";
   }
 
-  ctx.state[config.stateNamespace].styles.push(styleObj);
+  const fullStyleObj = insertProp(state, styleObj);
+
+  ctx.state[config.stateNamespace].styles.push(fullStyleObj);
 };

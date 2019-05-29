@@ -1,15 +1,17 @@
 import createAddScript from "./index";
 import test from "tape";
 import config from "./../config";
-import { createCtxWithKoaHead } from "./../../test/test-helpers";
+import { createCtxWithKoaHead, createState } from "./../../test/test-helpers";
 
 test("addScript (as string)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addScript = createAddScript(config, ctx);
+  const state = createState();
+  const addScript = createAddScript(config, state, ctx);
   const jsText = "console.log('test log')";
   const expectedScript = {
     type: "text/javascript",
-    jsText
+    jsText,
+    _meta: { insertIndex: 0 }
   };
 
   addScript("console.log('test log')");
@@ -20,13 +22,15 @@ test("addScript (as string)", async t => {
 
 test("addScript (as object)", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addScript = createAddScript(config, ctx);
+  const state = createState();
+  const addScript = createAddScript(config, state, ctx);
   const jsText = "console.log('test log')";
   const fixtureObj = "{ 'fixture': 'test fixture' }";
   const expectedScript = {
     fixtureObj,
     jsText,
-    type: "text/javascript"
+    type: "text/javascript",
+    _meta: { insertIndex: 0 }
   };
 
   addScript({ fixtureObj, jsText });

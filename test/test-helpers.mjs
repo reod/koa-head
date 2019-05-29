@@ -19,3 +19,9 @@ export async function createCtxWithKoaHead(koaHeadOptions) {
 
   return ctx;
 }
+
+export function createState() {
+  return {
+    count: -1
+  };
+}

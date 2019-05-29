@@ -1,4 +1,6 @@
-export default (config, ctx) => script => {
+import { insertProp } from "../prop";
+
+export default (config, state, ctx) => script => {
   const scriptObj =
     typeof script === "string" ? { jsText: script } : { ...script };
 
@@ -6,5 +8,7 @@ export default (config, ctx) => script => {
     scriptObj.type = "text/javascript";
   }
 
-  ctx.state[config.stateNamespace].scripts.push(scriptObj);
+  const fullScriptObj = insertProp(state, scriptObj);
+
+  ctx.state[config.stateNamespace].scripts.push(fullScriptObj);
 };
