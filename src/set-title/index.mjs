@@ -1,4 +1,4 @@
-export default (config, ctx) => title => {
+export default (config, state, ctx) => title => {
   const simpleTitle = typeof title === "string";
 
   const documentTitle = simpleTitle

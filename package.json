@@ -1,6 +1,6 @@
 {
   "name": "koa-head",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A document head manager middleware for koa",
   "main": "src/index",
   "scripts": {

@@ -8,6 +8,9 @@ import createToHtml from "./to-html";
 
 export default function(opts) {
   const config = { ...defaultConfig, ...opts };
+  const state = {
+    count: -1 // to make first insert with index 0
+  };
 
   return async function(ctx, next) {
     ctx.state[config.stateNamespace] = {};
@@ -18,12 +21,12 @@ export default function(opts) {
     ctx.state[config.stateNamespace].scripts = [];
 
     const middlewareApi = {
-      setTitle: createSetTitle(config, ctx),
-      addMetaTag: createAddMetaTag(config, ctx),
-      addLink: createAddLink(config, ctx),
-      addStyle: createAddStyle(config, ctx),
-      addScript: createAddScript(config, ctx),
-      toHtml: createToHtml(config, ctx)
+      setTitle: createSetTitle(config, state, ctx),
+      addMetaTag: createAddMetaTag(config, state, ctx),
+      addLink: createAddLink(config, state, ctx),
+      addStyle: createAddStyle(config, state, ctx),
+      addScript: createAddScript(config, state, ctx),
+      toHtml: createToHtml(config, state, ctx)
     };
 
     ctx[config.ctxNamespace] = middlewareApi;

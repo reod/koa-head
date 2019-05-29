@@ -1,8 +1,11 @@
+import { getCleanProp } from "../../prop";
+
 export default tag => {
+  const cleanTag = getCleanProp(tag);
   let html = "<meta ";
 
-  Object.keys(tag).forEach(key => {
-    html += `${key}="${tag[key]}" `;
+  Object.keys(cleanTag).forEach(key => {
+    html += `${key}="${cleanTag[key]}" `;
   });
 
   html += "/>";

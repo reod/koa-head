@@ -1,12 +1,17 @@
 import createAddLink from "./index";
 import test from "tape";
 import config from "./../config";
-import { createCtxWithKoaHead } from "./../../test/test-helpers";
+import { createCtxWithKoaHead, createState } from "./../../test/test-helpers";
 
 test("addLink", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addLink = createAddLink(config, ctx);
-  const expectedLink = { rel: "rel", content: "rel-content" };
+  const state = createState();
+  const addLink = createAddLink(config, state, ctx);
+  const expectedLink = {
+    rel: "rel",
+    content: "rel-content",
+    _meta: { insertIndex: 0 }
+  };
 
   addLink(expectedLink);
 

@@ -32,3 +32,25 @@ test("middleware setup with custom namespacee", async t => {
   t.assert(ctx.state[customStateNmspc]);
   t.end();
 });
+
+test("ordering elements", async t => {
+  const docHead = koaHead();
+  const ctx = createCtx();
+  const next = createNext();
+
+  await docHead(ctx, next);
+
+  ctx.documentHead.addLink({ rel: "a" });
+  ctx.documentHead.addMetaTag({ content: "b" });
+  ctx.documentHead.addLink({ rel: "a" });
+
+  const {
+    state: { documentHead: head }
+  } = ctx;
+
+  t.assert(head.links[0]._meta.insertIndex === 0);
+  t.assert(head.metaTags[0]._meta.insertIndex === 1);
+  t.assert(head.links[1]._meta.insertIndex === 2);
+
+  t.end();
+});

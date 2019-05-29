@@ -1,12 +1,17 @@
 import createAddMetaTag from "./index";
 import test from "tape";
 import config from "./../config";
-import { createCtxWithKoaHead } from "./../../test/test-helpers";
+import { createCtxWithKoaHead, createState } from "./../../test/test-helpers";
 
 test("addMetaTag", async t => {
   const ctx = await createCtxWithKoaHead();
-  const addMetaTag = createAddMetaTag(config, ctx);
-  const expectedMetaTag = { name: "meta-name", content: "meta-content" };
+  const state = createState();
+  const addMetaTag = createAddMetaTag(config, state, ctx);
+  const expectedMetaTag = {
+    name: "meta-name",
+    content: "meta-content",
+    _meta: { insertIndex: 0 }
+  };
 
   addMetaTag(expectedMetaTag);
 

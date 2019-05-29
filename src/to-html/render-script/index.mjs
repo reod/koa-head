@@ -1,14 +1,17 @@
+import { getCleanProp } from "../../prop";
+
 export default script => {
+  const cleanScript = getCleanProp(script);
   let html = "<script";
 
-  Object.keys(script)
+  Object.keys(cleanScript)
     .filter(key => key !== "jsText")
     .forEach((key, i, all) => {
       if (i === 0) {
         html += " ";
       }
 
-      html += `${key}="${script[key]}"`;
+      html += `${key}="${cleanScript[key]}"`;
 
       if (i < all.length - 1) {
         html += " ";
@@ -16,7 +19,7 @@ export default script => {
     });
 
   html += ">";
-  html += script.jsText;
+  html += cleanScript.jsText;
   html += "</script>";
 
   return html;

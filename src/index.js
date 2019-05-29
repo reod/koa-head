@@ -103,21 +103,42 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 // CONCATENATED MODULE: ./src/set-title/index.mjs
-/* harmony default export */ var set_title = ((config, ctx) => title => {
+/* harmony default export */ var set_title = ((config, state, ctx) => title => {
   const simpleTitle = typeof title === "string";
   const documentTitle = simpleTitle ? title : config.documentTitleFormatter(title);
   ctx.state[config.stateNamespace].title = documentTitle;
 });
+// CONCATENATED MODULE: ./src/prop.mjs
+const insertProp = (state, prop) => {
+  state.count = state.count + 1;
+  const _meta = {
+    insertIndex: state.count
+  };
+  return { ...prop,
+    _meta
+  };
+};
+const getCleanProp = prop => {
+  const fullProp = { ...prop
+  };
+  delete fullProp._meta;
+  return fullProp;
+};
 // CONCATENATED MODULE: ./src/add-meta-tag/index.mjs
-/* harmony default export */ var add_meta_tag = ((config, ctx) => prop => {
-  ctx.state[config.stateNamespace].metaTags.push(prop);
+
+/* harmony default export */ var add_meta_tag = ((config, state, ctx) => prop => {
+  const fullProp = insertProp(state, prop);
+  ctx.state[config.stateNamespace].metaTags.push(fullProp);
 });
 // CONCATENATED MODULE: ./src/add-link/index.mjs
-/* harmony default export */ var add_link = ((config, ctx) => prop => {
-  ctx.state[config.stateNamespace].links.push(prop);
+
+/* harmony default export */ var add_link = ((config, state, ctx) => prop => {
+  const fullProp = insertProp(state, prop);
+  ctx.state[config.stateNamespace].links.push(fullProp);
 });
 // CONCATENATED MODULE: ./src/add-style/index.mjs
-/* harmony default export */ var add_style = ((config, ctx) => style => {
+
+/* harmony default export */ var add_style = ((config, state, ctx) => style => {
   const styleObj = typeof style === "string" ? {
     cssText: style
   } : { ...style
@@ -127,10 +148,12 @@ __webpack_require__.r(__webpack_exports__);
     styleObj.type = "text/css";
   }
 
-  ctx.state[config.stateNamespace].styles.push(styleObj);
+  const fullStyleObj = insertProp(state, styleObj);
+  ctx.state[config.stateNamespace].styles.push(fullStyleObj);
 });
 // CONCATENATED MODULE: ./src/add-script/index.mjs
-/* harmony default export */ var add_script = ((config, ctx) => script => {
+
+/* harmony default export */ var add_script = ((config, state, ctx) => script => {
   const scriptObj = typeof script === "string" ? {
     jsText: script
   } : { ...script
@@ -140,65 +163,74 @@ __webpack_require__.r(__webpack_exports__);
     scriptObj.type = "text/javascript";
   }
 
-  ctx.state[config.stateNamespace].scripts.push(scriptObj);
+  const fullScriptObj = insertProp(state, scriptObj);
+  ctx.state[config.stateNamespace].scripts.push(fullScriptObj);
 });
 // CONCATENATED MODULE: ./src/to-html/render-title/index.mjs
 /* harmony default export */ var render_title = ((config, ctx) => title => {
   return `<title>${title}</title>`;
 });
 // CONCATENATED MODULE: ./src/to-html/render-meta-tag/index.mjs
+
 /* harmony default export */ var render_meta_tag = (tag => {
+  const cleanTag = getCleanProp(tag);
   let html = "<meta ";
-  Object.keys(tag).forEach(key => {
-    html += `${key}="${tag[key]}" `;
+  Object.keys(cleanTag).forEach(key => {
+    html += `${key}="${cleanTag[key]}" `;
   });
   html += "/>";
   return html;
 });
 // CONCATENATED MODULE: ./src/to-html/render-link/index.mjs
-/* harmony default export */ var render_link = (tag => {
+
+/* harmony default export */ var render_link = (link => {
+  const cleanLink = getCleanProp(link);
   let html = "<link ";
-  Object.keys(tag).forEach(key => {
-    html += `${key}="${tag[key]}" `;
+  Object.keys(cleanLink).forEach(key => {
+    html += `${key}="${cleanLink[key]}" `;
   });
   html += "/>";
   return html;
 });
 // CONCATENATED MODULE: ./src/to-html/render-style/index.mjs
+
 /* harmony default export */ var render_style = (style => {
+  const cleanStyle = getCleanProp(style);
   let html = "<style";
-  Object.keys(style).filter(key => key !== "cssText").forEach((key, i, all) => {
+  Object.keys(cleanStyle).filter(key => key !== "cssText").forEach((key, i, all) => {
     if (i === 0) {
       html += " ";
     }
 
-    html += `${key}="${style[key]}"`;
+    html += `${key}="${cleanStyle[key]}"`;
 
     if (i < all.length - 1) {
       html += " ";
     }
   });
   html += ">";
-  html += style.cssText;
+  html += cleanStyle.cssText;
   html += "</style>";
   return html;
 });
 // CONCATENATED MODULE: ./src/to-html/render-script/index.mjs
+
 /* harmony default export */ var render_script = (script => {
+  const cleanScript = getCleanProp(script);
   let html = "<script";
-  Object.keys(script).filter(key => key !== "jsText").forEach((key, i, all) => {
+  Object.keys(cleanScript).filter(key => key !== "jsText").forEach((key, i, all) => {
     if (i === 0) {
       html += " ";
     }
 
-    html += `${key}="${script[key]}"`;
+    html += `${key}="${cleanScript[key]}"`;
 
     if (i < all.length - 1) {
       html += " ";
     }
   });
   html += ">";
-  html += script.jsText;
+  html += cleanScript.jsText;
   html += "</script>";
   return html;
 });
@@ -243,6 +275,10 @@ function renderGroup(renderItem, config) {
   const config = { ...src_config,
     ...opts
   };
+  const state = {
+    count: -1 // to make first insert with index 0
+
+  };
   return async function (ctx, next) {
     ctx.state[config.stateNamespace] = {};
     ctx.state[config.stateNamespace].title = "";
@@ -251,12 +287,12 @@ function renderGroup(renderItem, config) {
     ctx.state[config.stateNamespace].styles = [];
     ctx.state[config.stateNamespace].scripts = [];
     const middlewareApi = {
-      setTitle: set_title(config, ctx),
-      addMetaTag: add_meta_tag(config, ctx),
-      addLink: add_link(config, ctx),
-      addStyle: add_style(config, ctx),
-      addScript: add_script(config, ctx),
-      toHtml: to_html(config, ctx)
+      setTitle: set_title(config, state, ctx),
+      addMetaTag: add_meta_tag(config, state, ctx),
+      addLink: add_link(config, state, ctx),
+      addStyle: add_style(config, state, ctx),
+      addScript: add_script(config, state, ctx),
+      toHtml: to_html(config, state, ctx)
     };
     ctx[config.ctxNamespace] = middlewareApi;
     await next();

@@ -1,8 +1,11 @@
-export default tag => {
+import { getCleanProp } from "../../prop";
+
+export default link => {
+  const cleanLink = getCleanProp(link);
   let html = "<link ";
 
-  Object.keys(tag).forEach(key => {
-    html += `${key}="${tag[key]}" `;
+  Object.keys(cleanLink).forEach(key => {
+    html += `${key}="${cleanLink[key]}" `;
   });
 
   html += "/>";
